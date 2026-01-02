@@ -10,7 +10,7 @@ const ToDoHeader = () => {
   
   
   return (
-   <header className=" flex justify-between mb-6 pt-20">
+   <header className=" flex justify-between mb-6 pt-20 p-5 items-center">
             <h1 className="text-white text-[2.5rem] font-bold tracking-[1rem]"> TODO </h1>
 
             <button className="cursor-pointer" onClick={toggleTheme}>

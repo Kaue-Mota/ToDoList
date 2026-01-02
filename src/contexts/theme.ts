@@ -7,8 +7,9 @@ export const themeConfig = {
   light: {
     name: 'light',
     layout: {
+        heroClass: 'bg-[url("/images/bg-desktop-light.jpg")]',
         backgroundColor: 'bg-neutral-very-light-graynish-blue',
-        textColor: 'text-neutral-very-dark-grayish-blue',
+        textColor: 'text-neutral-dark-grayish-blue',
     },
     todo:{
         backgroundColor: 'bg-neutral-very-light-gray',
@@ -21,6 +22,7 @@ export const themeConfig = {
   dark: {
     name: 'dark',
     layout: {
+        heroClass: 'bg-[url("/images/bg-desktop-dark.jpg")]',
         backgroundColor: 'bg-neutral-very-dark-blue',
         textColor: 'text-neutral-very-dark-grayish-blue',
     },
