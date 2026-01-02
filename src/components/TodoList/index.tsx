@@ -35,7 +35,7 @@ const TodoList = () => {
               key={todo.id}
             >
               <div className="flex items-center gap-4">
-                <span className="inline-block w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-[1px] cursor-pointer">
+                <span className="inline-block w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-px cursor-pointer">
                   <button
                     className={`w-full h-full border ${themeConfig[theme].todo.borderColor} 
                   ${themeConfig[theme].todo.backgroundColor} rounded-full cursor-pointer`}
