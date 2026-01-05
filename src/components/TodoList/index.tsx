@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { themeConfig } from "../../contexts/theme";
-import type { Todo } from "../../App";
+import type { Todo } from "../../Hooks/useTodo";
 import IconCheck from "/images/icon-check.svg";
 
 interface TodoListProps {
@@ -9,6 +9,7 @@ interface TodoListProps {
   toggleTodoCompleted: (id: number) => void;
   setFilter: (filter: "all" | "active" | "completed") => void;
   filter: "all" | "active" | "completed";
+  clearCompleted: () => void
 }
 
 const TodoList = ({
@@ -16,6 +17,7 @@ const TodoList = ({
   toggleTodoCompleted,
   setFilter,
   filter,
+  clearCompleted
 }: TodoListProps) => {
   const { theme } = useContext(ThemeContext);
  
@@ -109,6 +111,7 @@ const TodoList = ({
             </button>
           </div>
           <button
+          onClick={clearCompleted}
             className={`cursor-pointer ${
               theme === "dark"
                 ? "hover:text-neutral-light-grayish-blue"
