@@ -1,35 +1,30 @@
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { themeConfig } from "../../contexts/theme";
+import type { Todo } from "../../App";
+import IconCheck from "/images/icon-check.svg";
 
-const todos = [
-  {
-    id: 1,
-    title: "Complete online JavaScript course",
-    completed: true,
-  },
+interface TodoListProps {
+  todoList: Todo[];
+  toggleTodoCompleted: (id: number) => void;
+  setFilter: (filter: "all" | "active" | "completed") => void;
+  filter: "all" | "active" | "completed";
+}
 
-  {
-    id: 2,
-    title: "Jog around the park 3x",
-    completed: false,
-  },
-
-  {
-    id: 3,
-    title: "10 minutes meditation",
-    completed: false,
-  },
-];
-
-const TodoList = () => {
+const TodoList = ({
+  todoList,
+  toggleTodoCompleted,
+  setFilter,
+  filter,
+}: TodoListProps) => {
   const { theme } = useContext(ThemeContext);
+ 
 
   return (
     <>
       <div className={`${themeConfig[theme].todo.backgroundColor} rounded-md`}>
         <ul>
-          {todos.map((todo) => (
+          {todoList.map((todo) => (
             <li
               className={`p-6 border-b ${themeConfig[theme].todo.borderColor} flex justify-between items-center`}
               key={todo.id}
@@ -37,13 +32,34 @@ const TodoList = () => {
               <div className="flex items-center gap-4">
                 <span className="inline-block w-6 h-6 rounded-full hover:bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))] hover:p-px cursor-pointer">
                   <button
-                    className={`w-full h-full border ${themeConfig[theme].todo.borderColor} 
-                  ${themeConfig[theme].todo.backgroundColor} rounded-full cursor-pointer`}
-                  ></button>
+                    onClick={() => toggleTodoCompleted(todo.id)}
+                    className={`w-full h-full border ${
+                      themeConfig[theme].todo.borderColor
+                    } 
+                  ${
+                    themeConfig[theme].todo.backgroundColor
+                  } rounded-full cursor-pointer ${
+                      todo.completed
+                        ? "bg-[linear-gradient(to_right,hsl(192,100%,67%),hsl(280,87%,65%))]"
+                        : ""
+                    }`}
+                  >
+                    {todo.completed && (
+                      <img
+                        src={IconCheck}
+                        alt="Icone de marcado"
+                        className="h-2 w-2 m-auto"
+                      />
+                    )}
+                  </button>
                 </span>
 
-                <p className={`${themeConfig[theme].todo.textColor}`}>
-                  {todo.title}
+                <p
+                  className={`${themeConfig[theme].todo.textColor} ${
+                    todo.completed ? "line-through opacity-50" : ""
+                  }`}
+                >
+                  {todo.text}
                 </p>
               </div>
             </li>
@@ -53,11 +69,25 @@ const TodoList = () => {
         <div
           className={`flex justify-between p-4 ${themeConfig[theme].layout.textColor} text-sm`}
         >
-          <p>{todos.length} items total</p>
+          <p>{todoList.length} items total</p>
           <div className="hidden sm:flex gap-4">
-            <button className="text-bright-blue cursor-pointer">All</button>
             <button
-              className={`cursor-pointer ${
+              onClick={() => setFilter("all")}
+              className={`${
+                filter === "all" ? "text-bright-blue" : ""
+              } cursor-pointer ${
+                theme === "dark"
+                  ? "hover:text-neutral-light-grayish-blue"
+                  : "hover:text-neutral-very-dark-blue"
+              }`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setFilter("active")}
+              className={`${
+                filter === "active" ? "text-bright-blue" : ""
+              } cursor-pointer ${
                 theme === "dark"
                   ? "hover:text-neutral-light-grayish-blue"
                   : "hover:text-neutral-very-dark-blue"
@@ -66,7 +96,10 @@ const TodoList = () => {
               Active
             </button>
             <button
-              className={`cursor-pointer ${
+              onClick={() => setFilter("completed")}
+              className={`${
+                filter === "completed" ? "text-bright-blue" : ""
+              } cursor-pointer ${
                 theme === "dark"
                   ? "hover:text-neutral-light-grayish-blue"
                   : "hover:text-neutral-very-dark-blue"
@@ -90,9 +123,23 @@ const TodoList = () => {
       <div
         className={`${themeConfig[theme].todo.backgroundColor} ${themeConfig[theme].layout.textColor} mt-4 flex justify-center gap-5 py-4 rounded-md sm:hidden`}
       >
-        <button className="text-bright-blue cursor-pointer">All</button>
         <button
-          className={`cursor-pointer ${
+          onClick={() => setFilter("all")}
+          className={`${
+            filter === "all" ? "text-bright-blue" : ""
+          } cursor-pointer  ${
+            theme === "dark"
+              ? "hover:text-neutral-light-grayish-blue"
+              : "hover:text-neutral-very-dark-blue"
+          }`}
+        >
+          All
+        </button>
+        <button
+          onClick={() => setFilter("active")}
+          className={`${
+            filter === "active" ? "text-bright-blue" : ""
+          } cursor-pointer  ${
             theme === "dark"
               ? "hover:text-neutral-light-grayish-blue"
               : "hover:text-neutral-very-dark-blue"
@@ -101,17 +148,24 @@ const TodoList = () => {
           Active
         </button>
         <button
-          className={`cursor-pointer ${
+          onClick={() => setFilter("completed") }
+          className={`${
+            filter === "completed" ? "text-bright-blue" : ""
+          } cursor-pointer ${
             theme === "dark"
               ? "hover:text-neutral-light-grayish-blue"
               : "hover:text-neutral-very-dark-blue"
           }`}
         >
           Completed
+
         </button>
+        
       </div>
     </>
   );
 };
+
+
 
 export default TodoList;

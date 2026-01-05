@@ -6,7 +6,7 @@ import {useContext} from "react";
 const ToDoHeader = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
 
-  console.log(themeConfig[theme]);
+ 
   
   
   return (
