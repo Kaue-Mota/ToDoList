@@ -62,6 +62,10 @@ export const useTodo = () => {
     setTodoList((prev) => prev.filter((todo) => !todo.completed));
   };
 
+  const removeTask = (id: number) => {
+    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
   return {
     todoList,
     addTodo,
@@ -70,5 +74,6 @@ export const useTodo = () => {
     clearCompleted,
     filter,
     setFilter,
+    removeTask,
   };
 };

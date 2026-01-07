@@ -9,7 +9,9 @@ interface TodoListProps {
   toggleTodoCompleted: (id: number) => void;
   setFilter: (filter: "all" | "active" | "completed") => void;
   filter: "all" | "active" | "completed";
-  clearCompleted: () => void
+  clearCompleted: () => void;
+  removeTask: (id: number) => void;
+ 
 }
 
 const TodoList = ({
@@ -17,10 +19,10 @@ const TodoList = ({
   toggleTodoCompleted,
   setFilter,
   filter,
-  clearCompleted
+  clearCompleted,
+  removeTask
 }: TodoListProps) => {
   const { theme } = useContext(ThemeContext);
- 
 
   return (
     <>
@@ -28,7 +30,7 @@ const TodoList = ({
         <ul>
           {todoList.map((todo) => (
             <li
-              className={`p-6 border-b ${themeConfig[theme].todo.borderColor} flex justify-between items-center`}
+              className={`relative p-6 border-b ${themeConfig[theme].todo.borderColor} flex justify-between items-center`}
               key={todo.id}
             >
               <div className="flex items-center gap-4">
@@ -63,6 +65,17 @@ const TodoList = ({
                 >
                   {todo.text}
                 </p>
+
+                <button
+                  onClick={() => removeTask(todo.id)}
+                  className={`${themeConfig[theme].layout.textColor} absolute right-10 cursor-pointer ${
+                    theme === "dark"
+                      ? "hover:text-neutral-light-grayish-blue"
+                      : "hover:text-neutral-very-dark-blue"
+                  }`}
+                >
+                  X
+                </button>
               </div>
             </li>
           ))}
@@ -111,7 +124,7 @@ const TodoList = ({
             </button>
           </div>
           <button
-          onClick={clearCompleted}
+            onClick={clearCompleted}
             className={`cursor-pointer ${
               theme === "dark"
                 ? "hover:text-neutral-light-grayish-blue"
@@ -151,7 +164,7 @@ const TodoList = ({
           Active
         </button>
         <button
-          onClick={() => setFilter("completed") }
+          onClick={() => setFilter("completed")}
           className={`${
             filter === "completed" ? "text-bright-blue" : ""
           } cursor-pointer ${
@@ -161,14 +174,10 @@ const TodoList = ({
           }`}
         >
           Completed
-
         </button>
-        
       </div>
     </>
   );
 };
-
-
 
 export default TodoList;
